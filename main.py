@@ -1,57 +1,57 @@
-from graphics import *
+from graphics import GraphWin, color_rgb, Text, Point, Rectangle, Point
 import random
+import time
 
-def Main(Numbers):
-    Window = GraphWin("The Window", 500, 500)
-    Window.setBackground(color_rgb(0,0,0))
+def Main():
+    Window = MakeWin()
 
-    CloseMessage = Text(Point(75, 10), "Click Screen to close")
-    CloseMessage.setTextColor("white")
-    CloseMessage.setFace("times roman")
+    Nums = RanArray()
 
-    CloseMessage.draw(Window)
-    
-    #bubbleSort(Numbers, Window)
-    DrawGraph(Window, Numbers)
+    Recs = MakeGraph(Nums, Window)
 
-    
+    bubbleSort(Nums, Recs, Window)
 
     Window.getMouse()
     Window.close()
-
-def DrawGraph(Window, Numbers):
-    Recs = []
-    i = 0
-
-    while i < 100:
-        Recs.insert(i, Rectangle(Point(0 + (i * 5), 500), Point(5 + (i * 5), Numbers[i])))
-        Recs[i].setFill("white")
-        Recs[i].draw(Window)
-        i += 1
-
-def Data():
-    Numbers = []
-    scale = []
-
-    i = 0
-
-    while i < 100:
-        scale.insert(i, 491 - 4 * (i - 1))  
-
-        i += 1
     
-    i = 0
+def MakeWin():
+    Window = GraphWin("The Window", 500, 500)
+    Window.setBackground(color_rgb(0,255,255))
 
-    while i < 100:
-        Numbers.insert(i ,random.randint(1,100))
+    CloseMessage = Text(Point(140, 490), "Click Screen to close when done sorting")
+    CloseMessage.setTextColor("Black")
+    CloseMessage.setFace("times roman")
 
-        Numbers[i] = scale[Numbers[i] - 1]
+    CloseMessage.draw(Window)
 
-        i += 1
+    return Window
 
-    return Numbers
+def RanArray():
+    Nums = []
 
-def bubbleSort(arr, Window): 
+    for i in range(0, 50):
+        Nums.insert(i, random.randint(1, 100))
+
+    print(Nums) 
+    
+    return Nums
+
+def MakeGraph(Nums, Window):
+    Recs = []
+
+    for i in range(0,50):
+        Recs.insert(i, Rectangle(Point(0 + (i * 10), 0), Point(10 + (i * 10), Nums[i] * 4))) #(-W, -H), (W, H) W = 0 is top left
+        Recs[i].setFill("blue") 
+        Recs[i].setOutline("white")
+        Recs[i].draw(Window)
+
+    return Recs
+
+def ClearGraph(Recs) :
+    for i in range(len(Recs)):
+        Recs[i].undraw()
+
+def bubbleSort(arr, Recs, Window): 
     n = len(arr) 
   
     # Traverse through all array elements 
@@ -64,9 +64,10 @@ def bubbleSort(arr, Window):
             # traverse the array from 0 to n-i-1 
             # Swap if the element found is greater 
             # than the next element 
-            if arr[j] > arr[j+1] : 
+            if arr[j] > arr[j+1] :
                 arr[j], arr[j+1] = arr[j+1], arr[j]
-                DrawGraph(Window,arr)
-                
+                ClearGraph(Recs)
+                Recs = MakeGraph(arr, Window)
+                time.sleep(.3) #uncomment this to see it in its fastest iteration
 
-Main(Data())
+Main()
