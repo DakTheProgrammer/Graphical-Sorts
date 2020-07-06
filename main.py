@@ -68,6 +68,6 @@ def bubbleSort(arr, Recs, Window):
                 arr[j], arr[j+1] = arr[j+1], arr[j]
                 ClearGraph(Recs)
                 Recs = MakeGraph(arr, Window)
-                time.sleep(.3) #uncomment this to see it in its fastest iteration
+                time.sleep(.3) #<----------comment this to see it in its fastest iteration
 
 Main()
