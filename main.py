@@ -5,11 +5,16 @@ import time
 def Main():
     Window = MakeWin()
 
-    Nums = RanArray()
+    Nums = RanNums()
 
     Recs = MakeGraph(Nums, Window)
 
-    bubbleSort(Nums, Recs, Window)
+    #bubbleSort(Nums, Recs, Window)
+    #InsertionSort(Nums, Recs, Window)
+    #quickSortIterative(Nums, Recs, Window)
+    #mergeSort(Nums, Recs, Window)
+    
+    
 
     Window.getMouse()
     Window.close()
@@ -26,13 +31,13 @@ def MakeWin():
 
     return Window
 
-def RanArray():
+def RanNums():
     Nums = []
 
     for i in range(0, 50):
         Nums.insert(i, random.randint(1, 100))
 
-    print(Nums) 
+    #-----------------------print(Nums) 
     
     return Nums
 
@@ -51,23 +56,129 @@ def ClearGraph(Recs) :
     for i in range(len(Recs)):
         Recs[i].undraw()
 
-def bubbleSort(arr, Recs, Window): 
-    n = len(arr) 
+def DisplayChange(Nums, Recs, Window):
+    ClearGraph(Recs)
+    Recs = MakeGraph(Nums, Window)
+    #time.sleep(.3) #<----------comment this to see it in its fastest iteration
+    return Recs
+
+def bubbleSort(Nums, Recs, Window): 
+    n = len(Nums) - 1 
+
+    for i in range(n): 
+        for j in range(0, n-i): 
+            if Nums[j] > Nums[j+1] :
+                Nums[j], Nums[j+1] = Nums[j+1], Nums[j]
+                Recs = DisplayChange(Nums, Recs, Window)
+
+def InsertionSort(Nums, Recs, Window):
+    for i in range(len(Nums)): 
+        min_idx = i 
+
+        for j in range(i+1, len(Nums)): 
+            if Nums[min_idx] > Nums[j]: 
+                min_idx = j 
+                      
+        Nums[i], Nums[min_idx] = Nums[min_idx], Nums[i]
+        Recs = DisplayChange(Nums, Recs, Window) 
+
+def quickSortIterative(Nums, Recs, Window): 
   
-    # Traverse through all array elements 
-    for i in range(n-1): 
-    # range(n) also work but outer loop will repeat one time more than needed. 
+    l = 0
+    h = 49
+    
+    size = h - l + 1
+    stack = [0] * (size) 
   
-        # Last i elements are already in place 
-        for j in range(0, n-i-1): 
+    top = -1
   
-            # traverse the array from 0 to n-i-1 
-            # Swap if the element found is greater 
-            # than the next element 
-            if arr[j] > arr[j+1] :
-                arr[j], arr[j+1] = arr[j+1], arr[j]
-                ClearGraph(Recs)
-                Recs = MakeGraph(arr, Window)
-                time.sleep(.3) #<----------comment this to see it in its fastest iteration
+    top = top + 1
+    stack[top] = l 
+    top = top + 1
+    stack[top] = h 
+  
+    while top >= 0: 
+  
+        # Pop h and l 
+        h = stack[top] 
+        top = top - 1
+        l = stack[top] 
+        top = top - 1
+
+        i = ( l - 1 ) 
+        x = Nums[h] 
+    
+        for j in range(l, h): 
+            if   Nums[j] <= x:  
+                i = i + 1
+                Nums[i], Nums[j] = Nums[j], Nums[i] 
+    
+        Nums[i + 1], Nums[h] = Nums[h], Nums[i + 1]
+        p = (i + 1) 
+
+        Recs = DisplayChange(Nums, Recs, Window) 
+  
+        if p-1 > l: 
+            top = top + 1
+            stack[top] = l 
+            top = top + 1
+            stack[top] = p - 1
+  
+        if p + 1 < h: 
+            top = top + 1
+            stack[top] = p + 1
+            top = top + 1
+            stack[top] = h
+
+def mergeSort(Nums, Recs, Window):  
+      
+    current_size = 1
+      
+    while current_size < len(Nums) - 1:  
+          
+        left = 0
+
+        while left < len(Nums)-1:  
+              
+            mid = min((left + current_size - 1),(len(Nums)-1)) 
+            
+            right = ((2 * current_size + left - 1,  
+                    len(Nums) - 1)[2 * current_size  
+                        + left - 1 > len(Nums)-1])  
+                              
+            n1 = mid - left + 1
+            n2 = right - mid  
+            L = [0] * n1  
+            R = [0] * n2  
+            for i in range(0, n1):  
+                L[i] = Nums[left + i]  
+            for i in range(0, n2):  
+                R[i] = Nums[mid + i + 1]  
+        
+            i, j, k = 0, 0, left  
+            while i < n1 and j < n2:  
+                if L[i] > R[j]:  
+                    Nums[k] = R[j]  
+                    j += 1
+                else:  
+                    Nums[k] = L[i]  
+                    i += 1
+                k += 1
+        
+            while i < n1:  
+                Nums[k] = L[i]  
+                i += 1
+                k += 1
+        
+            while j < n2:  
+                Nums[k] = R[j]  
+                j += 1
+                k += 1
+
+            Recs = DisplayChange(Nums, Recs, Window)
+            left = left + current_size*2
+
+        current_size = 2 * current_size  
+  
 
 Main()
