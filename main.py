@@ -3,22 +3,13 @@ import random
 import time
 
 def Main():
-    Window = MakeWin()
-
-    Nums = RanNums()
-
-    Recs = MakeGraph(Nums, Window)
-
-    #BubbleSort(Nums, Recs, Window)
-    #SelectionSort(Nums, Recs, Window)
-    #InsertionSort(Nums, Recs, Window)
-    #QuickSort(Nums, Recs, Window)
-    #MergeSort(Nums, Recs, Window)
-    #HeapSort(Nums, Recs, Window)
-    #CountingSort(Nums, Recs, Window)
-
-    Window.getMouse()
-    Window.close()
+    BubbleSort()
+    #SelectionSort()
+    #InsertionSort()
+    #QuickSort()
+    #MergeSort()
+    #HeapSort()
+    #CountingSort()
     
 def MakeWin():
     Window = GraphWin("The Window", 500, 500)
@@ -61,7 +52,12 @@ def DisplayChange(Nums, Recs, Window):
     #time.sleep(.3) #<----------comment this to see it in its fastest iteration
     return Recs
 
-def BubbleSort(Nums, Recs, Window): 
+def BubbleSort():
+    Nums = RanNums()
+
+    Window = MakeWin()
+    Recs = MakeGraph(Nums, Window)
+
     n = len(Nums) - 1 
 
     for i in range(n): 
@@ -69,8 +65,16 @@ def BubbleSort(Nums, Recs, Window):
             if Nums[j] > Nums[j+1] :
                 Nums[j], Nums[j+1] = Nums[j+1], Nums[j]
                 Recs = DisplayChange(Nums, Recs, Window)
+    
+    Window.getMouse()
+    Window.close()
 
-def SelectionSort(Nums, Recs, Window):
+def SelectionSort():
+    Nums = RanNums()
+    
+    Window = MakeWin()
+    Recs = MakeGraph(Nums, Window)
+
     for i in range(len(Nums)): 
         
         min_idx = i 
@@ -81,7 +85,15 @@ def SelectionSort(Nums, Recs, Window):
         Nums[i], Nums[min_idx] = Nums[min_idx], Nums[i]
         Recs = DisplayChange(Nums, Recs, Window) 
 
-def InsertionSort(Nums, Recs, Window):
+    Window.getMouse()
+    Window.close()
+
+def InsertionSort():
+    Nums = RanNums()
+
+    Window = MakeWin()
+    Recs = MakeGraph(Nums, Window)
+
     for i in range(len(Nums)): 
         min_idx = i 
 
@@ -92,7 +104,11 @@ def InsertionSort(Nums, Recs, Window):
         Nums[i], Nums[min_idx] = Nums[min_idx], Nums[i]
         Recs = DisplayChange(Nums, Recs, Window) 
 
-def QuickSort(Nums, Recs, Window): 
+def QuickSort():
+    Nums = RanNums()
+
+    Window = MakeWin()
+    Recs = MakeGraph(Nums, Window) 
   
     l = 0
     h = 49
@@ -140,7 +156,11 @@ def QuickSort(Nums, Recs, Window):
             top = top + 1
             stack[top] = h
 
-def MergeSort(Nums, Recs, Window):  
+def MergeSort():
+    Nums = RanNums()
+
+    Window = MakeWin()
+    Recs = MakeGraph(Nums, Window)  
       
     current_size = 1
       
@@ -190,7 +210,10 @@ def MergeSort(Nums, Recs, Window):
 
         current_size = 2 * current_size
     
-def Heapify(Nums, n, i): 
+    Window.getMouse()
+    Window.close()
+    
+def Heapify(Nums, n, i):
     largest = i
     l = 2 * i + 1
     r = 2 * i + 2 
@@ -206,7 +229,12 @@ def Heapify(Nums, n, i):
 
         Heapify(Nums, n, largest) 
     
-def HeapSort(Nums, Recs, Window): 
+def HeapSort(): 
+    Nums = RanNums()
+
+    Window = MakeWin()
+    Recs = MakeGraph(Nums, Window)
+    
     n = len(Nums) 
   
     for i in range(n//2 - 1, -1, -1): 
@@ -216,8 +244,16 @@ def HeapSort(Nums, Recs, Window):
         Nums[i], Nums[0] = Nums[0], Nums[i]
         Recs = DisplayChange(Nums, Recs, Window) 
         Heapify(Nums, i, 0) 
+    
+    Window.getMouse()
+    Window.close()
 
-def CountingSort(Nums, Recs, Window):
+def CountingSort():
+    Nums = RanNums()
+
+    Window = MakeWin()
+    Recs = MakeGraph(Nums, Window)
+
     max_val = 100
     m = max_val + 1
     count = [0] * m                
@@ -229,6 +265,9 @@ def CountingSort(Nums, Recs, Window):
         for _ in range(count[a]):  
             Nums[i] = a
             i += 1
-            Recs = DisplayChange(Nums, Recs, Window)  
+            Recs = DisplayChange(Nums, Recs, Window)
+
+    Window.getMouse()
+    Window.close() 
 
 Main()
