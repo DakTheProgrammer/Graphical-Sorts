@@ -1,21 +1,54 @@
-from graphics import GraphWin, color_rgb, Text, Point, Rectangle, Point
+from tkinter import Label, Grid, Entry, Button, Tk, mainloop
+from graphics import GraphWin, color_rgb, Point, Rectangle, Point
+from graphics import Text as tx
 import random
 import time
 
 def Main():
-    BubbleSort()
-    #SelectionSort()
-    #InsertionSort()
-    #QuickSort()
-    #MergeSort()
-    #HeapSort()
-    #CountingSort()
+    MainWindow = Tk()
+
+    HelloText = Label(MainWindow, text = "Welcome to Dakota's Visual sorts!")
+    HelloText.grid(row = 0, column = 1)
+
+    DelayText = Label(MainWindow, text = "Enter Delay in MS 0-.99 :")
+    DelayText.grid(row = 2, column = 1)
+    EnterDelay = Entry(MainWindow, bd = 4)
+    EnterDelay.grid(row = 3, column = 1)
+
+    BubbleSortButton = Button(MainWindow, text = "Bubble Sort", padx = 11, pady = 10, command = BubbleSort)
+    BubbleSortButton.grid(row = 6, column = 0)
+
+    SelectionSortButton = Button(MainWindow, text = "Selection Sort", padx = 6, pady = 10, command = SelectionSort)
+    SelectionSortButton.grid(row = 6, column = 1)
+
+    InsertionSortButton = Button(MainWindow, text = "Insertion Sort", padx = 6, pady = 10, command = InsertionSort)
+    InsertionSortButton.grid(row = 6, column = 2)
+
+    QuickSortButton = Button(MainWindow, text = "Quick Sort", padx = 14, pady = 10, command = QuickSort)
+    QuickSortButton.grid(row = 7, column = 0)
+
+    MergeSortButton = Button(MainWindow, text = "Merge Sort", padx = 14, pady = 10, command = MergeSort)
+    MergeSortButton.grid(row = 7, column = 1)
+
+    HeapSortButton = Button(MainWindow, text = "Heap Sort", padx = 15, pady = 10, command = HeapSort)
+    HeapSortButton.grid(row = 7, column = 2)
+
+    CountingSortButton = Button(MainWindow, text = "Counting Sort", padx = 7, pady = 10, command = CountingSort)
+    CountingSortButton.grid(row = 8, column = 1)
+
+    WarningText = Label(MainWindow, text = "WARNING!!! ONLY CLOSE WITH EXIT BUTTON OR PROGRAM WILL RUN INFINITELY!!!")
+    WarningText.grid(row = 9, column = 1)
+
+    ExitButton = Button(MainWindow, text = "Exit", padx = 7, pady = 10, command = quit)
+    ExitButton.grid(row = 10, column = 1)
+
+    MainWindow.mainloop()
     
 def MakeWin():
     Window = GraphWin("The Window", 500, 500)
     Window.setBackground(color_rgb(0,255,255))
 
-    CloseMessage = Text(Point(140, 490), "Click Screen to close when done sorting")
+    CloseMessage = tx(Point(140, 490), "Click Screen to close when done sorting")
     CloseMessage.setTextColor("Black")
     CloseMessage.setFace("times roman")
 
@@ -103,6 +136,9 @@ def InsertionSort():
                       
         Nums[i], Nums[min_idx] = Nums[min_idx], Nums[i]
         Recs = DisplayChange(Nums, Recs, Window) 
+    
+    Window.getMouse()
+    Window.close() 
 
 def QuickSort():
     Nums = RanNums()
@@ -155,6 +191,9 @@ def QuickSort():
             stack[top] = p + 1
             top = top + 1
             stack[top] = h
+    
+    Window.getMouse()
+    Window.close() 
 
 def MergeSort():
     Nums = RanNums()
